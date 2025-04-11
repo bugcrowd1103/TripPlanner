@@ -39,20 +39,36 @@ export default function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Plan</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="absolute top-0 left-0 w-48 p-2 bg-white rounded-lg shadow-lg border mt-2">
-                      <Link href="/flights">
-                        <span className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">Flights</span>
-                      </Link>
-                      <Link href="/hotels">
-                        <span className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">Hotels</span>
-                      </Link>
-                      <Link href="/events">
-                        <span className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">Events</span>
-                      </Link>
-                      <Link href="/ar-vr">
-                        <span className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">AR/VR Demos</span>
-                      </Link>
-                    </div>
+                    <NavigationMenuList className="grid w-48 gap-1 p-2 bg-white rounded-lg shadow-lg">
+                      <NavigationMenuItem>
+                        <Link href="/flights">
+                          <NavigationMenuLink className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                            Flights
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                      <NavigationMenuItem>
+                        <Link href="/hotels">
+                          <NavigationMenuLink className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                            Hotels
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                      <NavigationMenuItem>
+                        <Link href="/events">
+                          <NavigationMenuLink className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                            Events
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                      <NavigationMenuItem>
+                        <Link href="/ar-vr">
+                          <NavigationMenuLink className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">
+                            AR/VR Demos
+                          </NavigationMenuLink>
+                        </Link>
+                      </NavigationMenuItem>
+                    </NavigationMenuList>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>

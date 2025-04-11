@@ -111,7 +111,7 @@ const FeaturesSection = () => {
   const featuredCategories = featureCategories.slice(0, 6);
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50">
+    <section id="features" className="py-24 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-purple-100 text-purple-800 text-sm font-medium mb-6">
@@ -124,7 +124,7 @@ const FeaturesSection = () => {
             Our AI-powered platform creates truly personalized travel experiences with intelligent features that adapt to your needs.
           </p>
         </div>
-        
+
         {/* Main feature categories grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {featuredCategories.map((category) => (
@@ -135,7 +135,7 @@ const FeaturesSection = () => {
                 </div>
                 <h3 className="text-xl font-bold">{category.title}</h3>
               </div>
-              
+
               <ul className="space-y-3">
                 {category.features.map((feature, index) => (
                   <li key={index} className="flex items-center text-gray-700">
@@ -149,14 +149,14 @@ const FeaturesSection = () => {
             </div>
           ))}
         </div>
-        
+
         {/* Feature highlight */}
         <div className="relative bg-gradient-to-r from-purple-600 to-blue-500 rounded-3xl overflow-hidden">
           <div className="absolute right-0 top-0 w-1/2 h-full hidden lg:block">
             <div className="absolute inset-0 bg-white opacity-10" 
                  style={{clipPath: 'polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%)'}}></div>
           </div>
-          
+
           <div className="relative p-12 lg:p-16 flex flex-col lg:flex-row items-center z-10">
             <div className="lg:w-1/2 lg:pr-12 mb-8 lg:mb-0">
               <h3 className="text-3xl font-bold text-white mb-4">Conversational AI Trip Planning</h3>
@@ -178,7 +178,7 @@ const FeaturesSection = () => {
                 </span>
               </div>
             </div>
-            
+
             <div className="lg:w-1/2 w-full max-w-md">
               <div className="bg-white rounded-2xl shadow-2xl p-5 max-w-sm mx-auto">
                 <div className="flex items-center mb-4">
@@ -190,7 +190,7 @@ const FeaturesSection = () => {
                     <p className="text-xs text-gray-500">Online now</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-3 mb-4">
                   <div className="bg-gray-100 rounded-lg rounded-tl-none p-3 text-sm">
                     How can I help you plan your perfect trip today?
@@ -202,7 +202,7 @@ const FeaturesSection = () => {
                     Great choice! Cherry blossom season in Japan is beautiful. How many days are you planning to stay and what activities interest your family?
                   </div>
                 </div>
-                
+
                 <div className="relative">
                   <input 
                     type="text" 

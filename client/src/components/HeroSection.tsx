@@ -42,7 +42,10 @@ const HeroSection = ({ onStartPlanning }: HeroSectionProps) => {
                 <span>Start Your Adventure</span>
                 <MoveRight className="ml-2 h-5 w-5" />
               </button>
-              <button className="bg-white/10 backdrop-blur-sm text-white text-lg font-medium py-4 px-8 rounded-full hover:bg-white/20 transition-all duration-300">
+              <button 
+                onClick={() => document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })}
+                className="bg-white/10 backdrop-blur-sm text-white text-lg font-medium py-4 px-8 rounded-full hover:bg-white/20 transition-all duration-300"
+              >
                 Explore Features
               </button>
             </div>

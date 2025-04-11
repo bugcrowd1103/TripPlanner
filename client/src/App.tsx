@@ -6,6 +6,12 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import MyTrips from "@/pages/MyTrips";
 import ItineraryDetails from "@/pages/ItineraryDetails";
+import Explore from "@/pages/Explore";
+import Hotels from "@/pages/Hotels";
+import Events from "@/pages/Events";
+import Feed from "@/pages/Feed";
+import About from "@/pages/About";
+import ARVR from "@/pages/ARVR";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import LiveChatbot from "@/components/LiveChatbot";
@@ -16,11 +22,12 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/my-trips" component={MyTrips} />
       <Route path="/itinerary/:id" component={ItineraryDetails} />
-      <Route path="/explore" component={NotFound} />
-      <Route path="/hotels" component={NotFound} />
-      <Route path="/events" component={NotFound} />
-      <Route path="/feed" component={NotFound} />
-      <Route path="/about" component={NotFound} />
+      <Route path="/explore" component={Explore} />
+      <Route path="/hotels" component={Hotels} />
+      <Route path="/events" component={Events} />
+      <Route path="/feed" component={Feed} />
+      <Route path="/about" component={About} />
+      <Route path="/ar-vr" component={ARVR} />
       <Route component={NotFound} />
     </Switch>
   );

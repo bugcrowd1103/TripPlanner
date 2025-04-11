@@ -1,4 +1,4 @@
-import { Globe, Smartphone, Compass, HeadsetVr, Orbit, Shuffle, MapPin, Glasses } from 'lucide-react';
+import { Globe, Smartphone, Compass, Headset, Orbit, Shuffle, MapPin, Glasses } from 'lucide-react';
 
 const ARVR = () => {
   const features = [
@@ -13,7 +13,7 @@ const ARVR = () => {
       description: "Use augmented reality to navigate new cities with real-time points of interest, directions, and historical information directly in your view."
     },
     {
-      icon: <HeadsetVr className="w-12 h-12 mb-4 text-primary" />,
+      icon: <Headset className="w-12 h-12 mb-4 text-primary" />,
       title: "VR Experiences",
       description: "Transport yourself to exotic locations with our VR experiences. Feel like you're actually there before booking your trip."
     },
@@ -38,7 +38,7 @@ const ARVR = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInDelayLong">
               <button className="bg-white text-indigo-900 font-bold py-3 px-8 rounded-full hover:bg-blue-50 transition shadow-lg flex items-center justify-center">
-                <HeadsetVr className="mr-2" />
+                <Headset className="mr-2" />
                 Try VR Demo
               </button>
               <button className="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full hover:bg-white/10 transition flex items-center justify-center">
@@ -137,7 +137,7 @@ const ARVR = () => {
             <div className="md:w-1/2 md:pl-8 mb-6 md:mb-0">
               <div className="bg-indigo-100 p-6 rounded-2xl relative overflow-hidden">
                 <div className="absolute top-4 right-4 bg-indigo-500 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold">2</div>
-                <HeadsetVr className="w-20 h-20 text-indigo-600 mb-4" />
+                <Headset className="w-20 h-20 text-indigo-600 mb-4" />
                 <h3 className="text-xl font-bold mb-2">Connect VR Headset (Optional)</h3>
                 <p>For full immersion, connect a VR headset to experience destinations in 360°.</p>
               </div>

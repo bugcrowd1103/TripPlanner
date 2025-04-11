@@ -12,9 +12,10 @@ import Events from "@/pages/Events";
 import Feed from "@/pages/Feed";
 import About from "@/pages/About";
 import ARVR from "@/pages/ARVR";
+import Pricing from "@/pages/Pricing";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import LiveChatbot from "@/components/LiveChatbot";
+import FloatingChatbot from "@/components/FloatingChatbot";
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function Router() {
       <Route path="/feed" component={Feed} />
       <Route path="/about" component={About} />
       <Route path="/ar-vr" component={ARVR} />
+      <Route path="/pricing" component={Pricing} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -42,7 +44,7 @@ function App() {
           <Router />
         </main>
         <Footer />
-        <LiveChatbot />
+        <FloatingChatbot />
       </div>
       <Toaster />
     </QueryClientProvider>

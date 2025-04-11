@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Plane, Hotel, Map, Calendar, Users, Headphones, MessageSquare, Info, Globe, Compass } from 'lucide-react';
+import { Plane, Hotel, Map, Calendar, Users, Headphones, MessageSquare, Info, Globe, Compass, DollarSign } from 'lucide-react';
 import { useState } from 'react';
 
 const Header = () => {
@@ -66,6 +66,12 @@ const Header = () => {
             <a className={`font-medium ${location === '/about' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
               <Info className="w-4 h-4" />
               <span>About</span>
+            </a>
+          </Link>
+          <Link href="/pricing">
+            <a className={`font-medium ${location === '/pricing' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
+              <DollarSign className="w-4 h-4" />
+              <span>Pricing</span>
             </a>
           </Link>
         </div>
@@ -144,6 +150,12 @@ const Header = () => {
               <a className={`font-medium ${location === '/about' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
                 <Info className="w-5 h-5" />
                 <span>About</span>
+              </a>
+            </Link>
+            <Link href="/pricing">
+              <a className={`font-medium ${location === '/pricing' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
+                <DollarSign className="w-5 h-5" />
+                <span>Pricing</span>
               </a>
             </Link>
 

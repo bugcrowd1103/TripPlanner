@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Search, MapPin, Calendar, Filter, ArrowRight, Clock, Star, Heart, Bookmark, ChevronDown } from 'lucide-react';
 import { useLocation } from 'wouter';
+import RealTimeUpdates from '@/components/RealTimeUpdates';
 
 const Explore = () => {
   const [activeFilter, setActiveFilter] = useState('popular');
@@ -169,52 +170,38 @@ const Explore = () => {
             </p>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md p-5 max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 border border-gray-300 rounded-lg px-4 py-3 focus-within:border-primary">
-                  <Search className="w-5 h-5 text-gray-500" />
-                  <input 
-                    type="text" 
-                    placeholder="Where do you want to go?" 
-                    className="w-full bg-transparent border-none focus:outline-none text-gray-700"
-                  />
-                </div>
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3 border border-gray-300 rounded-lg px-4 py-3 focus-within:border-primary">
-                  <Calendar className="w-5 h-5 text-gray-500" />
-                  <input 
-                    type="text" 
-                    placeholder="When do you want to travel?" 
-                    className="w-full bg-transparent border-none focus:outline-none text-gray-700"
-                  />
-                </div>
-              </div>
-              <button className="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition whitespace-nowrap">
-                Search
-              </button>
+          {/* Simplified search bar */}
+          <div className="bg-white rounded-xl shadow-md p-4 max-w-3xl mx-auto flex flex-col md:flex-row gap-3">
+            <div className="relative flex-grow">
+              <input 
+                type="text" 
+                placeholder="Where do you want to go?" 
+                className="w-full bg-gray-50 border-none rounded-lg py-3 px-12 focus:ring-primary focus:bg-white"
+              />
+              <Search className="w-5 h-5 text-gray-400 absolute left-4 top-3.5" />
             </div>
-            
-            <div className="flex flex-wrap gap-3 mt-4">
-              <div className="text-sm text-gray-700 flex items-center">
-                <span className="font-medium mr-2">Popular:</span>
-                <div className="flex flex-wrap gap-2">
-                  <button className="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition">
-                    Paris
-                  </button>
-                  <button className="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition">
-                    Bali
-                  </button>
-                  <button className="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition">
-                    Tokyo
-                  </button>
-                  <button className="px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition">
-                    New York
-                  </button>
-                </div>
-              </div>
-            </div>
+            <button className="bg-primary text-white px-8 py-3 rounded-lg font-medium hover:bg-primary/90 transition">
+              Explore
+            </button>
+          </div>
+          
+          {/* Popular search tags */}
+          <div className="flex justify-center flex-wrap gap-2 mt-4">
+            <span className="bg-white/20 backdrop-blur-sm text-white px-4 py-1.5 rounded-full text-sm">
+              Popular:
+            </span>
+            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-1.5 rounded-full text-sm transition">
+              Paris
+            </button>
+            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-1.5 rounded-full text-sm transition">
+              Bali
+            </button>
+            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-1.5 rounded-full text-sm transition">
+              Tokyo
+            </button>
+            <button className="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white px-4 py-1.5 rounded-full text-sm transition">
+              New York
+            </button>
           </div>
         </div>
       </div>
@@ -377,80 +364,87 @@ const Explore = () => {
         </div>
       </div>
       
-      {/* Experiences */}
+      {/* Real-time Updates and Experiences in a grid layout */}
       <div className="container mx-auto px-4 py-16">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <div>
-            <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
-              Unforgettable Experiences
-            </h2>
-            <p className="text-gray-600">
-              Discover unique activities and adventures at your destination
-            </p>
-          </div>
-          
-          <div className="flex gap-2 overflow-x-auto mt-4 md:mt-0">
-            <button className="whitespace-nowrap px-4 py-2 bg-primary text-white rounded-full text-sm font-medium">
-              All Experiences
-            </button>
-            <button className="whitespace-nowrap px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition">
-              Adventure
-            </button>
-            <button className="whitespace-nowrap px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition">
-              Culinary
-            </button>
-            <button className="whitespace-nowrap px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition">
-              Cultural
-            </button>
-            <button className="whitespace-nowrap px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition">
-              Nature
-            </button>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {experiences.map(experience => (
-            <div key={experience.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
-              <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={experience.image} 
-                  alt={experience.title} 
-                  className="w-full h-full object-cover hover:scale-105 transition duration-300"
-                />
-                <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-sm text-primary text-xs font-bold px-3 py-1 rounded-full">
-                  {experience.type.charAt(0).toUpperCase() + experience.type.slice(1)}
-                </div>
-                <button className="absolute top-4 right-4 w-8 h-8 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition">
-                  <Heart className="w-4 h-4 text-gray-500 hover:text-rose-500" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left column: Experiences */}
+          <div className="lg:col-span-2">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+              <div>
+                <h2 className="text-3xl font-bold mb-2 bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
+                  Unforgettable Experiences
+                </h2>
+                <p className="text-gray-600">
+                  Discover unique activities and adventures at your destination
+                </p>
+              </div>
+              
+              <div className="flex gap-2 overflow-x-auto mt-4 md:mt-0">
+                <button className="whitespace-nowrap px-4 py-2 bg-primary text-white rounded-full text-sm font-medium">
+                  All Experiences
+                </button>
+                <button className="whitespace-nowrap px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition">
+                  Adventure
+                </button>
+                <button className="whitespace-nowrap px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-full text-sm font-medium hover:bg-gray-50 transition">
+                  Culinary
                 </button>
               </div>
-              <div className="p-4">
-                <div className="flex items-center text-amber-500 mb-1">
-                  <Star className="w-4 h-4 fill-current mr-1" />
-                  <span className="text-sm font-medium">{experience.rating}</span>
-                  <span className="text-xs text-gray-500 ml-1">({experience.reviews})</span>
-                </div>
-                <h3 className="font-bold mb-1 line-clamp-1">{experience.title}</h3>
-                <div className="flex items-center text-gray-500 text-xs mb-3">
-                  <MapPin className="w-3 h-3 mr-1" />
-                  <span>{experience.location}</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-gray-500" />
-                    <span className="text-sm text-gray-700">{experience.duration}</span>
-                  </div>
-                  <div className="font-bold text-primary">{experience.price}</div>
-                </div>
-              </div>
             </div>
-          ))}
-        </div>
-        
-        <div className="text-center mt-10">
-          <button className="bg-white text-primary font-medium py-3 px-8 rounded-full border border-primary hover:bg-primary/5 transition">
-            View All Experiences
-          </button>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {experiences.map(experience => (
+                <div key={experience.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={experience.image} 
+                      alt={experience.title} 
+                      className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                    />
+                    <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-sm text-primary text-xs font-bold px-3 py-1 rounded-full">
+                      {experience.type.charAt(0).toUpperCase() + experience.type.slice(1)}
+                    </div>
+                    <button className="absolute top-4 right-4 w-8 h-8 bg-white/70 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition">
+                      <Heart className="w-4 h-4 text-gray-500 hover:text-rose-500" />
+                    </button>
+                  </div>
+                  <div className="p-4">
+                    <div className="flex items-center text-amber-500 mb-1">
+                      <Star className="w-4 h-4 fill-current mr-1" />
+                      <span className="text-sm font-medium">{experience.rating}</span>
+                      <span className="text-xs text-gray-500 ml-1">({experience.reviews})</span>
+                    </div>
+                    <h3 className="font-bold mb-1 line-clamp-1">{experience.title}</h3>
+                    <div className="flex items-center text-gray-500 text-xs mb-3">
+                      <MapPin className="w-3 h-3 mr-1" />
+                      <span>{experience.location}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-gray-500" />
+                        <span className="text-sm text-gray-700">{experience.duration}</span>
+                      </div>
+                      <div className="font-bold text-primary">{experience.price}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="text-center mt-10">
+              <button className="bg-white text-primary font-medium py-3 px-8 rounded-full border border-primary hover:bg-primary/5 transition">
+                View All Experiences
+              </button>
+            </div>
+          </div>
+          
+          {/* Right column: Real-time Updates */}
+          <div className="lg:col-span-1">
+            <h2 className="text-2xl font-bold mb-6 bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
+              Destination Insights
+            </h2>
+            <RealTimeUpdates location="Tokyo" compact={true} />
+          </div>
         </div>
       </div>
       

@@ -69,6 +69,10 @@ export const travelPreferences = pgTable("travel_preferences", {
   pace: text("pace"),
   companions: text("companions"),
   activities: text("activities"),
+  mealPreferences: text("meal_preferences"),
+  dietaryRestrictions: text("dietary_restrictions"),
+  accommodation: text("accommodation"),
+  transportationMode: text("transportation_mode"),
   additionalNotes: text("additional_notes"),
   createdAt: timestamp("created_at").defaultNow()
 });

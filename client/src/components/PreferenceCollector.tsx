@@ -42,6 +42,40 @@ const companionOptions = [
   { icon: "users", label: "Group", value: "group" },
 ];
 
+const mealOptions = [
+  { label: "Local Cuisine", description: "Authentic local dishes", value: "local" },
+  { label: "Fine Dining", description: "Upscale restaurants", value: "fine-dining" },
+  { label: "Street Food", description: "Casual & authentic", value: "street-food" },
+  { label: "International", description: "Familiar options", value: "international" },
+];
+
+const dietaryOptions = [
+  { label: "No Restrictions", value: "none" },
+  { label: "Vegetarian", value: "vegetarian" },
+  { label: "Vegan", value: "vegan" },
+  { label: "Gluten-Free", value: "gluten-free" },
+  { label: "Dairy-Free", value: "dairy-free" },
+  { label: "Halal", value: "halal" },
+  { label: "Kosher", value: "kosher" },
+];
+
+const accommodationOptions = [
+  { label: "Hotel", icon: "building", value: "hotel" },
+  { label: "Resort", icon: "umbrella-beach", value: "resort" },
+  { label: "Vacation Rental", icon: "home", value: "vacation-rental" },
+  { label: "Boutique", icon: "gem", value: "boutique" },
+  { label: "Hostel", icon: "users", value: "hostel" },
+  { label: "Camping", icon: "campground", value: "camping" },
+];
+
+const transportationOptions = [
+  { label: "Rental Car", icon: "car", value: "rental-car" },
+  { label: "Public Transit", icon: "bus", value: "public-transit" },
+  { label: "Walking/Biking", icon: "walking", value: "walking-biking" },
+  { label: "Guided Tours", icon: "map", value: "guided-tours" },
+  { label: "Ride Services", icon: "taxi", value: "ride-services" },
+];
+
 interface PreferenceCollectorProps {
   onComplete: (preferences: TravelPreference) => void;
   onChatStart: () => void;
@@ -61,6 +95,10 @@ const PreferenceCollector = ({ onComplete, onChatStart }: PreferenceCollectorPro
     pace: "",
     companions: "",
     activities: "",
+    mealPreferences: "",
+    dietaryRestrictions: "",
+    accommodation: "",
+    transportationMode: "",
     additionalNotes: ""
   });
 
@@ -88,7 +126,7 @@ const PreferenceCollector = ({ onComplete, onChatStart }: PreferenceCollectorPro
       return;
     }
     
-    if (currentQuestion < 5) {
+    if (currentQuestion < 8) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       // Submit preferences
@@ -401,6 +439,184 @@ const PreferenceCollector = ({ onComplete, onChatStart }: PreferenceCollectorPro
       </div>
     </div>
   );
+  
+  const renderMealPreferencesQuestion = () => (
+    <div className="mb-10">
+      <h4 className="text-xl font-medium mb-4">What type of dining experiences do you prefer?</h4>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {mealOptions.map(option => (
+          <button 
+            key={option.value}
+            className={cn(
+              "preference-btn border rounded-xl p-4 text-center hover:border-primary hover:bg-white hover:shadow-md transition",
+              preferences.mealPreferences === option.value 
+                ? "border-primary bg-white shadow-md" 
+                : "border-gray-300"
+            )}
+            onClick={() => updatePreference("mealPreferences", option.value)}
+          >
+            <span className="font-medium">{option.label}</span>
+            <span className="block text-sm text-medium mt-1">{option.description}</span>
+          </button>
+        ))}
+      </div>
+      
+      <div className="mt-6">
+        <h5 className="text-lg font-medium mb-2">Any dietary restrictions?</h5>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {dietaryOptions.map(option => (
+            <button 
+              key={option.value}
+              className={cn(
+                "border rounded-lg py-2 px-3 text-center hover:border-primary hover:bg-white hover:shadow-sm transition text-sm",
+                preferences.dietaryRestrictions === option.value 
+                  ? "border-primary bg-white shadow-sm" 
+                  : "border-gray-300"
+              )}
+              onClick={() => updatePreference("dietaryRestrictions", option.value)}
+            >
+              <span>{option.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+  
+  const renderAccommodationQuestion = () => (
+    <div className="mb-10">
+      <h4 className="text-xl font-medium mb-4">What type of accommodation do you prefer?</h4>
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {accommodationOptions.map(option => (
+          <button 
+            key={option.value}
+            className={cn(
+              "preference-btn border rounded-xl p-4 text-center hover:border-primary hover:bg-white hover:shadow-md transition",
+              preferences.accommodation === option.value 
+                ? "border-primary bg-white shadow-md" 
+                : "border-gray-300"
+            )}
+            onClick={() => updatePreference("accommodation", option.value)}
+          >
+            <div className="flex justify-center mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-2xl text-primary">
+                {option.icon === "building" && (
+                  <>
+                    <rect width="16" height="20" x="4" y="2" rx="2" ry="2" />
+                    <path d="M9 22v-4h6v4" />
+                    <path d="M8 6h.01" />
+                    <path d="M16 6h.01" />
+                    <path d="M8 10h.01" />
+                    <path d="M16 10h.01" />
+                    <path d="M8 14h.01" />
+                    <path d="M16 14h.01" />
+                  </>
+                )}
+                {option.icon === "umbrella-beach" && (
+                  <>
+                    <path d="M20.2 17.2a4 4 0 0 0-5.6-5.6M18 19a4 4 0 0 0-6-6M18 22v-3M10 18a4 4 0 0 1 4-4h3" />
+                    <circle cx="12" cy="12" r="10" />
+                  </>
+                )}
+                {option.icon === "home" && (
+                  <>
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                    <polyline points="9 22 9 12 15 12 15 22" />
+                  </>
+                )}
+                {option.icon === "gem" && (
+                  <>
+                    <polygon points="6 3 18 3 22 9 12 22 2 9" />
+                    <path d="m12 22 4-13-10-6" />
+                    <path d="M12 22 8 9l10-6" />
+                    <path d="M2 9h20" />
+                  </>
+                )}
+                {option.icon === "users" && (
+                  <>
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </>
+                )}
+                {option.icon === "campground" && (
+                  <>
+                    <path d="M4 20V10c0-4.4 3.6-8 8-8s8 3.6 8 8v10" />
+                    <path d="M8 16H4" />
+                    <path d="M12 10h.01" />
+                  </>
+                )}
+              </svg>
+            </div>
+            <span className="font-medium">{option.label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+  
+  const renderTransportationQuestion = () => (
+    <div className="mb-10">
+      <h4 className="text-xl font-medium mb-4">How would you like to get around?</h4>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {transportationOptions.map(option => (
+          <button 
+            key={option.value}
+            className={cn(
+              "preference-btn border rounded-xl p-4 text-center hover:border-primary hover:bg-white hover:shadow-md transition",
+              preferences.transportationMode === option.value 
+                ? "border-primary bg-white shadow-md" 
+                : "border-gray-300"
+            )}
+            onClick={() => updatePreference("transportationMode", option.value)}
+          >
+            <div className="flex justify-center mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-2xl text-primary">
+                {option.icon === "car" && (
+                  <>
+                    <path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2" />
+                    <circle cx="6.5" cy="16.5" r="2.5" />
+                    <circle cx="16.5" cy="16.5" r="2.5" />
+                  </>
+                )}
+                {option.icon === "bus" && (
+                  <>
+                    <path d="M8 6v12m8-12v12" />
+                    <rect width="16" height="16" x="4" y="5" rx="2" />
+                    <path d="M4 13h16" />
+                    <path d="M4 5h16" />
+                  </>
+                )}
+                {option.icon === "walking" && (
+                  <>
+                    <path d="m8 16-1 4m0-11a1 1 0 1 0 2 0 1 1 0 1 0-2 0m5 1-1.5 9 3.5 3" />
+                    <path d="M7 12a1 1 0 1 0 2 0 1 1 0 1 0-2 0m8-3-3.5 3-1.5 8" />
+                  </>
+                )}
+                {option.icon === "map" && (
+                  <>
+                    <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
+                    <line x1="9" x2="9" y1="3" y2="18" />
+                    <line x1="15" x2="15" y1="6" y2="21" />
+                  </>
+                )}
+                {option.icon === "taxi" && (
+                  <>
+                    <path d="M12 18H8a2 2 0 0 1-2-2v-1h12v1a2 2 0 0 1-2 2h-4ZM10 6h4m-4.5 3 .5-3h4l.5 3" />
+                    <path d="M5 10h14a1 1 0 0 1 1 1v1H4v-1a1 1 0 0 1 1-1Z" />
+                    <path d="M5 18v2" />
+                    <path d="M19 18v2" />
+                  </>
+                )}
+              </svg>
+            </div>
+            <span className="font-medium">{option.label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 
   const renderCurrentQuestion = () => {
     switch (currentQuestion) {
@@ -414,6 +630,12 @@ const PreferenceCollector = ({ onComplete, onChatStart }: PreferenceCollectorPro
         return renderPaceQuestion();
       case 5:
         return renderCompanionsQuestion();
+      case 6:
+        return renderMealPreferencesQuestion();
+      case 7:
+        return renderAccommodationQuestion();
+      case 8:
+        return renderTransportationQuestion();
       default:
         return null;
     }

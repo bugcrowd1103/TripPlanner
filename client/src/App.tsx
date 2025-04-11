@@ -15,7 +15,7 @@ import ARVR from "@/pages/ARVR";
 import Pricing from "@/pages/Pricing";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FloatingChatbot from "@/components/FloatingChatbot";
+import { LiveChatbot } from "@/components/LiveChatbot"; // Updated import
 
 function Router() {
   return (
@@ -44,8 +44,7 @@ function App() {
           <Router />
         </main>
         <Footer />
-        {/* LiveChatbot component temporarily removed */}
-        <FloatingChatbot />
+        <LiveChatbot />
       </div>
       <Toaster />
     </QueryClientProvider>

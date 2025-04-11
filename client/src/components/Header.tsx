@@ -40,8 +40,8 @@ export default function Header() {
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Plan</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-48 p-2">
-                      <Link href="/arvr">
+                    <div className="w-48 p-2 absolute top-full">
+                      <Link href="/ar-vr">
                         <a className="block px-4 py-2 hover:bg-gray-100 rounded-md">AR/VR</a>
                       </Link>
                       <Link href="/hotels">

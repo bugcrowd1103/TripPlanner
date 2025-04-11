@@ -659,7 +659,7 @@ const PreferenceCollector = ({ onComplete, onChatStart }: PreferenceCollectorPro
           <div></div>
         )}
         
-        {currentQuestion < 5 ? (
+        {currentQuestion < 8 ? (
           <button 
             className="bg-primary text-white py-2 px-6 rounded-full font-medium hover:bg-opacity-90 transition"
             onClick={handleNextQuestion}

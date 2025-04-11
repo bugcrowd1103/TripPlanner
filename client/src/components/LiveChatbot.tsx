@@ -47,7 +47,7 @@ const LiveChatbot = () => {
     setIsMinimized(!isMinimized);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim() === '') return;
     
     // Add user message
@@ -61,28 +61,65 @@ const LiveChatbot = () => {
     setMessages(prev => [...prev, userMessage]);
     setInput('');
     
-    // Simulate bot response
-    setTimeout(() => {
-      const botResponses = [
-        "I can help you plan your trip. Where are you thinking of going?",
-        "That sounds exciting! When are you planning to travel?",
-        "Would you prefer budget-friendly options or are you looking for luxury?",
-        "How many people will be traveling with you?",
-        "I can recommend some great hotels in that area. What amenities are important to you?",
-        "Let me find some flights for those dates. Do you prefer direct flights?"
-      ];
+    try {
+      // Show typing indicator
+      setMessages(prev => [...prev, {
+        id: 'typing-indicator',
+        text: '...',
+        sender: 'bot',
+        timestamp: new Date()
+      }]);
       
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+      // Get conversation history to send to API
+      const conversationHistory = messages
+        .filter(msg => msg.id !== 'typing-indicator')
+        .concat(userMessage)
+        .map(msg => ({
+          role: msg.sender === 'user' ? 'user' : 'assistant',
+          content: msg.text
+        }));
       
+      // Call the backend API
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ messages: conversationHistory })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to get response from chat API');
+      }
+      
+      const data = await response.json();
+      
+      // Remove typing indicator
+      setMessages(prev => prev.filter(msg => msg.id !== 'typing-indicator'));
+      
+      // Add bot response
       const botMessage: Message = {
         id: Date.now().toString(),
-        text: randomResponse,
+        text: data.message || "I'm having trouble connecting right now. Please try again.",
         sender: 'bot',
         timestamp: new Date()
       };
       
       setMessages(prev => [...prev, botMessage]);
-    }, 1000);
+    } catch (error) {
+      // Remove typing indicator
+      setMessages(prev => prev.filter(msg => msg.id !== 'typing-indicator'));
+      
+      // Add error message
+      const errorMessage: Message = {
+        id: Date.now().toString(),
+        text: "Sorry, I'm having trouble connecting to my brain right now. Please try again later.",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      
+      setMessages(prev => [...prev, errorMessage]);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

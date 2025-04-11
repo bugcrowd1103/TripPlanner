@@ -4,7 +4,7 @@ import { GeneratedItinerary } from "../client/src/lib/openai";
 
 // Initialize OpenAI with API key from environment variables and custom base URL
 const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY || "sk-prpm083Ito2GbHtNDBA5EpyJWLWGdlcDHaTgKLnjdX7OLODT",
   baseURL: "https://api.chatanywhere.tech/v1"
 });
 
@@ -28,6 +28,10 @@ Interests: ${preference.interests || 'Not specified'}
 Pace: ${preference.pace || 'Not specified'}
 Companions: ${preference.companions || 'Not specified'}
 Activities: ${preference.activities || 'Not specified'}
+Meal Preferences: ${preference.mealPreferences || 'Not specified'}
+Dietary Restrictions: ${preference.dietaryRestrictions || 'Not specified'}
+Accommodation Type: ${preference.accommodation || 'Not specified'}
+Transportation Mode: ${preference.transportationMode || 'Not specified'}
 Additional notes: ${preference.additionalNotes || 'Not specified'}
 Dates: ${preference.startDate ? `${preference.startDate} to ${preference.endDate}` : 'Flexible'}
 
@@ -133,6 +137,10 @@ Extract the following information if present:
 - Pace (relaxed, moderate, active)
 - Companions (solo, couple, family, friends, group)
 - Activities
+- Meal preferences (local, fine-dining, street-food, international)
+- Dietary restrictions (none, vegetarian, vegan, gluten-free, dairy-free, halal, kosher)
+- Accommodation (hotel, resort, vacation-rental, boutique, hostel, camping)
+- Transportation mode (rental-car, public-transit, walking-biking, guided-tours, ride-services)
 - Additional notes
 
 Output ONLY a JSON object with these fields. If information is not present, don't include the field.`;
@@ -179,9 +187,13 @@ Interests: ${preference.interests || 'Not specified'}
 Pace: ${preference.pace || 'Not specified'}
 Companions: ${preference.companions || 'Not specified'}
 Activities: ${preference.activities || 'Not specified'}
+Meal Preferences: ${preference.mealPreferences || 'Not specified'}
+Dietary Restrictions: ${preference.dietaryRestrictions || 'Not specified'}
+Accommodation Type: ${preference.accommodation || 'Not specified'}
+Transportation Mode: ${preference.transportationMode || 'Not specified'}
 
 Provide helpful, friendly advice for their trip planning. Ask follow-up questions to gather more details about their interests, preferred activities, must-see attractions, dietary preferences, and any specific requirements. Your goal is to collect enough information to create a personalized travel itinerary.
-Keep responses conversational, concise, and focused on helping the user plan their perfect trip.`;
+Keep responses conversational, concise, and focused on helping the user plan their perfect trip. You work for Triponic, an AI-powered travel assistant.`;
 
     // Format the conversation history
     const messages = [

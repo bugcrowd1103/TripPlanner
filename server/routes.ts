@@ -242,6 +242,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // LiveChatbot endpoint
+  app.post(`${apiPrefix}/chat`, async (req, res) => {
+    try {
+      const { messages } = req.body;
+      
+      if (!messages || !Array.isArray(messages) || messages.length === 0) {
+        return res.status(400).json({ error: "Valid messages array is required" });
+      }
+      
+      // Default user values for chatbot - not tied to specific travel preferences
+      const defaultPreference = {
+        id: 0,
+        userId: 0,
+        destinationType: "",
+        customDestination: "",
+        duration: "",
+        budget: "",
+        interests: "",
+        pace: "",
+        companions: "",
+        activities: "",
+        mealPreferences: "",
+        dietaryRestrictions: "",
+        accommodation: "",
+        transportationMode: "",
+        createdAt: new Date()
+      };
+      
+      // Create a conversation object to pass to the AI
+      const conversationForAI = {
+        id: 0,
+        userId: 0,
+        preferenceId: 0,
+        messages: messages.map(msg => ({
+          role: msg.role,
+          content: msg.content,
+          timestamp: Date.now()
+        })),
+        createdAt: new Date()
+      };
+      
+      // Call OpenAI to get a response
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          { 
+            role: "system", 
+            content: "You are a helpful travel assistant called Triponic. You help users plan their trips by providing travel tips, destination information, and personalized recommendations. Keep responses concise, friendly, and focused on travel-related topics. If users ask about non-travel topics, gently redirect the conversation to travel planning. You should introduce yourself as Triponic's AI-powered travel assistant."
+          },
+          ...messages
+        ],
+        temperature: 0.7,
+        max_tokens: 300,
+      });
+      
+      const message = response.choices[0].message.content || 
+        "I'm having trouble connecting right now. How else can I help with your travel plans?";
+      
+      res.json({ message });
+    } catch (error) {
+      console.error("Error in chat endpoint:", error);
+      res.status(500).json({ 
+        error: "Failed to generate chat response",
+        message: "I'm having trouble connecting right now. Please try again later."
+      });
+    }
+  });
+  
   // Generate itinerary using OpenAI
   app.post(`${apiPrefix}/generate-itinerary`, async (req, res) => {
     try {

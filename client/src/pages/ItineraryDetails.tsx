@@ -9,7 +9,7 @@ import GeneratedItinerary from '@/components/GeneratedItinerary';
 
 const ItineraryDetails = () => {
   const { id } = useParams();
-  const itineraryId = parseInt(id);
+  const itineraryId = id ? parseInt(id) : NaN;
   const [_, navigate] = useLocation();
   const { toast } = useToast();
 

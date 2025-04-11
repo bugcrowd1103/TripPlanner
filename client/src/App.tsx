@@ -15,7 +15,7 @@ import ARVR from "@/pages/ARVR";
 import Pricing from "@/pages/Pricing";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { LiveChatbot } from "@/components/LiveChatbot"; // Updated import
+import LiveChatbot from "@/components/LiveChatbot";
 
 function Router() {
   return (

@@ -1,4 +1,3 @@
-
 import { Link } from "wouter";
 import { Button } from "./ui/button";
 import { 
@@ -23,45 +22,45 @@ export default function Header() {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/" className="cursor-pointer px-4 py-2">
-                    Home
-                  </NavigationMenuLink>
+                  <Link href="/">
+                    <span className="cursor-pointer px-4 py-2">Home</span>
+                  </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/about" className="cursor-pointer px-4 py-2">
-                    About
-                  </NavigationMenuLink>
+                  <Link href="/about">
+                    <span className="cursor-pointer px-4 py-2">About</span>
+                  </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/explore" className="cursor-pointer px-4 py-2">
-                    Explore
-                  </NavigationMenuLink>
+                  <Link href="/explore">
+                    <span className="cursor-pointer px-4 py-2">Explore</span>
+                  </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Plan</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="w-48 p-2 absolute top-full">
+                    <div className="w-48 p-2">
                       <Link href="/ar-vr">
-                        <a className="block px-4 py-2 hover:bg-gray-100 rounded-md">AR/VR</a>
+                        <span className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">AR/VR</span>
                       </Link>
                       <Link href="/hotels">
-                        <a className="block px-4 py-2 hover:bg-gray-100 rounded-md">Hotels</a>
+                        <span className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">Hotels</span>
                       </Link>
                       <Link href="/events">
-                        <a className="block px-4 py-2 hover:bg-gray-100 rounded-md">Events</a>
+                        <span className="block px-4 py-2 hover:bg-gray-100 rounded-md cursor-pointer">Events</span>
                       </Link>
                     </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/pricing" className="cursor-pointer px-4 py-2">
-                    Pricing
-                  </NavigationMenuLink>
+                  <Link href="/pricing">
+                    <span className="cursor-pointer px-4 py-2">Pricing</span>
+                  </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/feed" className="cursor-pointer px-4 py-2">
-                    Feed
-                  </NavigationMenuLink>
+                  <Link href="/feed">
+                    <span className="cursor-pointer px-4 py-2">Feed</span>
+                  </Link>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>

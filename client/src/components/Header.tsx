@@ -1,46 +1,76 @@
+
 import { Link } from "wouter";
+import { Button } from "./ui/button";
+import { 
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "./ui/navigation-menu";
 
 export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b">
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between h-16">
-          <Link href="/">
-            <a className="text-xl font-bold text-primary">TravelAI</a>
-          </Link>
-
-          <div className="flex gap-6">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-8">
             <Link href="/">
-              <span className="cursor-pointer">Home</span>
+              <a className="text-xl font-bold text-primary">TravelAI</a>
             </Link>
-            <Link href="/about">
-              <span className="cursor-pointer">About</span>
-            </Link>
-            <Link href="/explore">
-              <span className="cursor-pointer">Explore</span>
-            </Link>
-            <div className="relative group">
-              <span className="cursor-pointer">Plan</span>
-              <div className="absolute hidden group-hover:block w-48 bg-white shadow-lg rounded-lg mt-2">
-                <Link href="/arvr">
-                  <span className="block px-4 py-2 hover:bg-gray-100">AR/VR</span>
-                </Link>
-                <Link href="/hotels">
-                  <span className="block px-4 py-2 hover:bg-gray-100">Hotels</span>
-                </Link>
-                <Link href="/events">
-                  <span className="block px-4 py-2 hover:bg-gray-100">Events</span>
-                </Link>
-              </div>
-            </div>
-            <Link href="/pricing">
-              <span className="cursor-pointer">Pricing</span>
-            </Link>
-            <Link href="/feed">
-              <span className="cursor-pointer">Feed</span>
-            </Link>
+
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuLink href="/" className="cursor-pointer px-4 py-2">
+                    Home
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink href="/about" className="cursor-pointer px-4 py-2">
+                    About
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink href="/explore" className="cursor-pointer px-4 py-2">
+                    Explore
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Plan</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="w-48 p-2">
+                      <Link href="/arvr">
+                        <a className="block px-4 py-2 hover:bg-gray-100 rounded-md">AR/VR</a>
+                      </Link>
+                      <Link href="/hotels">
+                        <a className="block px-4 py-2 hover:bg-gray-100 rounded-md">Hotels</a>
+                      </Link>
+                      <Link href="/events">
+                        <a className="block px-4 py-2 hover:bg-gray-100 rounded-md">Events</a>
+                      </Link>
+                    </div>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink href="/pricing" className="cursor-pointer px-4 py-2">
+                    Pricing
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuLink href="/feed" className="cursor-pointer px-4 py-2">
+                    Feed
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+              </NavigationMenuList>
+            </NavigationMenu>
           </div>
-        </nav>
+
+          <Button variant="outline" className="ml-auto">
+            Sign In
+          </Button>
+        </div>
       </div>
     </header>
   );

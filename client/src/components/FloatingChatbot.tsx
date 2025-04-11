@@ -77,7 +77,11 @@ const FloatingChatbot = () => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ 
+          messages: [
+            { role: 'user', content: input }
+          ] 
+        })
       });
       
       // Parse the response and extract the message
@@ -278,7 +282,12 @@ const FloatingChatbot = () => {
           </div>
           <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
             <span>Powered by AI</span>
-            <button className="text-primary hover:underline">Clear conversation</button>
+            <button 
+              className="text-primary hover:underline"
+              onClick={clearConversation}
+            >
+              Clear conversation
+            </button>
           </div>
         </div>
       </div>

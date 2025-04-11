@@ -44,6 +44,7 @@ function App() {
           <Router />
         </main>
         <Footer />
+        {/* LiveChatbot component temporarily removed */}
         <FloatingChatbot />
       </div>
       <Toaster />

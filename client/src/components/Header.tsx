@@ -1,6 +1,15 @@
+
 import { Link, useLocation } from "wouter";
-import { Plane, Hotel, Map, Calendar, Users, Headphones, MessageSquare, Info, Globe, Compass, DollarSign } from 'lucide-react';
+import { Plane, Hotel, Map, Calendar, Users, MessageSquare, Info, Globe, Compass, DollarSign, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 const Header = () => {
   const [location] = useLocation();
@@ -26,10 +35,10 @@ const Header = () => {
               <span>Home</span>
             </a>
           </Link>
-          <Link href="/my-trips">
-            <a className={`font-medium ${location === '/my-trips' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
-              <Plane className="w-4 h-4" />
-              <span>My Trips</span>
+          <Link href="/about">
+            <a className={`font-medium ${location === '/about' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
+              <Info className="w-4 h-4" />
+              <span>About</span>
             </a>
           </Link>
           <Link href="/explore">
@@ -38,40 +47,50 @@ const Header = () => {
               <span>Explore</span>
             </a>
           </Link>
-          <Link href="/ar-vr">
-            <a className={`font-medium ${location === '/ar-vr' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
-              <Globe className="w-4 h-4" />
-              <span>AR/VR</span>
-            </a>
-          </Link>
-          <Link href="/hotels">
-            <a className={`font-medium ${location === '/hotels' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
-              <Hotel className="w-4 h-4" />
-              <span>Hotels</span>
-            </a>
-          </Link>
-          <Link href="/events">
-            <a className={`font-medium ${location === '/events' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
-              <Calendar className="w-4 h-4" />
-              <span>Events</span>
+          
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="font-medium text-gray-700 hover:text-primary transition flex items-center gap-1">
+                  <Plane className="w-4 h-4" />
+                  <span>Plan</span>
+                </NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <div className="grid gap-3 p-4 w-[200px]">
+                    <Link href="/ar-vr">
+                      <a className={`font-medium ${location === '/ar-vr' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-2 p-2 rounded hover:bg-gray-50`}>
+                        <Globe className="w-4 h-4" />
+                        <span>AR/VR</span>
+                      </a>
+                    </Link>
+                    <Link href="/hotels">
+                      <a className={`font-medium ${location === '/hotels' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-2 p-2 rounded hover:bg-gray-50`}>
+                        <Hotel className="w-4 h-4" />
+                        <span>Hotels</span>
+                      </a>
+                    </Link>
+                    <Link href="/events">
+                      <a className={`font-medium ${location === '/events' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-2 p-2 rounded hover:bg-gray-50`}>
+                        <Calendar className="w-4 h-4" />
+                        <span>Events</span>
+                      </a>
+                    </Link>
+                  </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          <Link href="/pricing">
+            <a className={`font-medium ${location === '/pricing' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
+              <DollarSign className="w-4 h-4" />
+              <span>Pricing</span>
             </a>
           </Link>
           <Link href="/feed">
             <a className={`font-medium ${location === '/feed' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
               <Users className="w-4 h-4" />
               <span>Feed</span>
-            </a>
-          </Link>
-          <Link href="/about">
-            <a className={`font-medium ${location === '/about' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
-              <Info className="w-4 h-4" />
-              <span>About</span>
-            </a>
-          </Link>
-          <Link href="/pricing">
-            <a className={`font-medium ${location === '/pricing' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
-              <DollarSign className="w-4 h-4" />
-              <span>Pricing</span>
             </a>
           </Link>
         </div>
@@ -110,10 +129,10 @@ const Header = () => {
                 <span>Home</span>
               </a>
             </Link>
-            <Link href="/my-trips">
-              <a className={`font-medium ${location === '/my-trips' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
-                <Plane className="w-5 h-5" />
-                <span>My Trips</span>
+            <Link href="/about">
+              <a className={`font-medium ${location === '/about' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
+                <Info className="w-5 h-5" />
+                <span>About</span>
               </a>
             </Link>
             <Link href="/explore">
@@ -122,40 +141,42 @@ const Header = () => {
                 <span>Explore</span>
               </a>
             </Link>
-            <Link href="/ar-vr">
-              <a className={`font-medium ${location === '/ar-vr' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
-                <Globe className="w-5 h-5" />
-                <span>AR/VR</span>
-              </a>
-            </Link>
-            <Link href="/hotels">
-              <a className={`font-medium ${location === '/hotels' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
-                <Hotel className="w-5 h-5" />
-                <span>Hotels</span>
-              </a>
-            </Link>
-            <Link href="/events">
-              <a className={`font-medium ${location === '/events' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
-                <Calendar className="w-5 h-5" />
-                <span>Events</span>
+            <div className="py-2 pl-2 border-l border-gray-200">
+              <div className="font-medium text-gray-700 mb-2 flex items-center gap-2">
+                <Plane className="w-5 h-5" />
+                <span>Plan</span>
+              </div>
+              <div className="space-y-3 pl-7">
+                <Link href="/ar-vr">
+                  <a className={`font-medium ${location === '/ar-vr' ? 'text-primary' : 'text-gray-700'} py-1 flex items-center gap-2`}>
+                    <Globe className="w-4 h-4" />
+                    <span>AR/VR</span>
+                  </a>
+                </Link>
+                <Link href="/hotels">
+                  <a className={`font-medium ${location === '/hotels' ? 'text-primary' : 'text-gray-700'} py-1 flex items-center gap-2`}>
+                    <Hotel className="w-4 h-4" />
+                    <span>Hotels</span>
+                  </a>
+                </Link>
+                <Link href="/events">
+                  <a className={`font-medium ${location === '/events' ? 'text-primary' : 'text-gray-700'} py-1 flex items-center gap-2`}>
+                    <Calendar className="w-4 h-4" />
+                    <span>Events</span>
+                  </a>
+                </Link>
+              </div>
+            </div>
+            <Link href="/pricing">
+              <a className={`font-medium ${location === '/pricing' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
+                <DollarSign className="w-5 h-5" />
+                <span>Pricing</span>
               </a>
             </Link>
             <Link href="/feed">
               <a className={`font-medium ${location === '/feed' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
                 <Users className="w-5 h-5" />
                 <span>Feed</span>
-              </a>
-            </Link>
-            <Link href="/about">
-              <a className={`font-medium ${location === '/about' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
-                <Info className="w-5 h-5" />
-                <span>About</span>
-              </a>
-            </Link>
-            <Link href="/pricing">
-              <a className={`font-medium ${location === '/pricing' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
-                <DollarSign className="w-5 h-5" />
-                <span>Pricing</span>
               </a>
             </Link>
 

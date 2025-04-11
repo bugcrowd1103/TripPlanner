@@ -8,6 +8,7 @@ import MyTrips from "@/pages/MyTrips";
 import ItineraryDetails from "@/pages/ItineraryDetails";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import LiveChatbot from "@/components/LiveChatbot";
 
 function Router() {
   return (
@@ -15,6 +16,11 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/my-trips" component={MyTrips} />
       <Route path="/itinerary/:id" component={ItineraryDetails} />
+      <Route path="/explore" component={NotFound} />
+      <Route path="/hotels" component={NotFound} />
+      <Route path="/events" component={NotFound} />
+      <Route path="/feed" component={NotFound} />
+      <Route path="/about" component={NotFound} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -29,6 +35,7 @@ function App() {
           <Router />
         </main>
         <Footer />
+        <LiveChatbot />
       </div>
       <Toaster />
     </QueryClientProvider>

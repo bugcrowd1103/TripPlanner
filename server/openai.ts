@@ -2,9 +2,11 @@ import OpenAI from "openai";
 import { type TravelPreference, type Conversation } from "@shared/schema";
 import { GeneratedItinerary } from "../client/src/lib/openai";
 
-// Initialize OpenAI with API key from environment variables
-// Do not hard-code the API key here for security reasons
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+// Initialize OpenAI with API key from environment variables and custom base URL
+const openai = new OpenAI({ 
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: "https://api.chatanywhere.tech/v1"
+});
 
 // The newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 

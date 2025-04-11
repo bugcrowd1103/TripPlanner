@@ -4,6 +4,13 @@ import { storage } from "./storage";
 import { z } from "zod";
 import { insertTravelPreferenceSchema, insertItinerarySchema, messageSchema } from "@shared/schema";
 import { generateItineraryWithAI, processNaturalLanguageWithAI, generateChatResponseWithAI } from "./openai";
+import OpenAI from "openai";
+
+// Initialize the OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: "https://api.chatanywhere.tech/v1"
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API routes prefix

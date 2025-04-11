@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Plane, Hotel, Map, Calendar, Users, Headphones, MessageSquare, Info } from 'lucide-react';
+import { Plane, Hotel, Map, Calendar, Users, Headphones, MessageSquare, Info, Globe, Compass } from 'lucide-react';
 import { useState } from 'react';
 
 const Header = () => {
@@ -34,8 +34,14 @@ const Header = () => {
           </Link>
           <Link href="/explore">
             <a className={`font-medium ${location === '/explore' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
-              <Map className="w-4 h-4" />
+              <Compass className="w-4 h-4" />
               <span>Explore</span>
+            </a>
+          </Link>
+          <Link href="/ar-vr">
+            <a className={`font-medium ${location === '/ar-vr' ? 'text-primary' : 'text-gray-700 hover:text-primary'} transition flex items-center gap-1`}>
+              <Globe className="w-4 h-4" />
+              <span>AR/VR</span>
             </a>
           </Link>
           <Link href="/hotels">
@@ -65,10 +71,6 @@ const Header = () => {
         </div>
         
         <div className="flex items-center space-x-4">
-          <button className="hidden md:flex items-center text-gray-600 hover:text-primary transition">
-            <MessageSquare className="w-5 h-5" />
-            <span className="ml-1">Chat 24/7</span>
-          </button>
           <button className="bg-white text-primary hover:bg-gray-100 font-medium py-2 px-4 rounded-full border border-primary transition hidden md:block">
             Sign In
           </button>
@@ -110,8 +112,14 @@ const Header = () => {
             </Link>
             <Link href="/explore">
               <a className={`font-medium ${location === '/explore' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
-                <Map className="w-5 h-5" />
+                <Compass className="w-5 h-5" />
                 <span>Explore</span>
+              </a>
+            </Link>
+            <Link href="/ar-vr">
+              <a className={`font-medium ${location === '/ar-vr' ? 'text-primary' : 'text-gray-700'} py-2 flex items-center gap-2`}>
+                <Globe className="w-5 h-5" />
+                <span>AR/VR</span>
               </a>
             </Link>
             <Link href="/hotels">
@@ -138,10 +146,7 @@ const Header = () => {
                 <span>About</span>
               </a>
             </Link>
-            <div className="flex items-center gap-2 py-2">
-              <MessageSquare className="w-5 h-5 text-primary" />
-              <span className="text-gray-700">Chat 24/7</span>
-            </div>
+
             <div className="pt-2 flex gap-3">
               <button className="bg-white text-primary font-medium py-2 px-4 rounded-full border border-primary flex-1 transition">
                 Sign In

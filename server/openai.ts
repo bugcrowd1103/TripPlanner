@@ -1,12 +1,18 @@
 import OpenAI from "openai";
+import dotenv from 'dotenv'; // Ensure you have this import
 import { type TravelPreference, type Conversation } from "@shared/schema";
 import { GeneratedItinerary } from "../client/src/lib/openai";
 
+// Load environment variables from .env file
+dotenv.config();
+
 // Initialize OpenAI with API key from environment variables and custom base URL
 const openai = new OpenAI({ 
-  apiKey: process.env.OPENAI_API_KEY || "sk-prpm083Ito2GbHtNDBA5EpyJWLWGdlcDHaTgKLnjdX7OLODT",
+  apiKey: process.env.OPENAI_API_KEY, // Ensure this reads the key correctly
   baseURL: "https://api.chatanywhere.tech/v1"
 });
+
+// Your remaining code...
 
 // The newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
 

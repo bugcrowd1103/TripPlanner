@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { TravelPreference, preferenceTypes } from '@shared/schema';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, MapPin, Users, Compass, Wallet, Clock } from 'lucide-react';
 
 interface PreferenceCollectorProps {
   onComplete: (preferences: TravelPreference) => void;
@@ -20,10 +21,17 @@ const PreferenceCollector = ({ onComplete }: PreferenceCollectorProps) => {
   });
   const [destinationImage, setDestinationImage] = useState('');
 
-  // Update destination image when destination changes
+  // Helper function to format date for input
+  const formatDateForInput = (date: Date | string | null | undefined): string => {
+      if (!date) return '';
+      if (date instanceof Date) {
+        return date.toISOString().split('T')[0];
+      }
+      return date || '';
+    };
+
   useEffect(() => {
     if (preferences.customDestination) {
-      // This would ideally be replaced with a real image API
       const destinations: Record<string, string> = {
         'paris': 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34',
         'tokyo': 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26',
@@ -37,11 +45,11 @@ const PreferenceCollector = ({ onComplete }: PreferenceCollectorProps) => {
       const destination = preferences.customDestination.toLowerCase();
       const foundDestination = Object.keys(destinations).find(key => destination.includes(key));
 
-      if (foundDestination) {
-        setDestinationImage(destinations[foundDestination]);
-      } else {
-        setDestinationImage('https://images.unsplash.com/photo-1488646953014-85cb44e25828');
-      }
+      setDestinationImage(
+        foundDestination
+          ? destinations[foundDestination]
+          : 'https://images.unsplash.com/photo-1488646953014-85cb44e25828'
+      );
     }
   }, [preferences.customDestination]);
 
@@ -50,23 +58,17 @@ const PreferenceCollector = ({ onComplete }: PreferenceCollectorProps) => {
   };
 
   const nextStep = () => {
-    if (step < 2) {
-      setStep(step + 1);
-    } else {
-      handleSubmit();
-    }
+    if (step < 2) setStep(step + 1);
+    else handleSubmit();
   };
 
   const prevStep = () => {
-    if (step > 0) {
-      setStep(step - 1);
-    }
+    if (step > 0) setStep(step - 1);
   };
 
   const handleSubmit = async () => {
     if (preferences.customDestination && preferences.startDate && preferences.endDate) {
       try {
-        // Save the preference to the backend first
         const response = await fetch('/api/preferences', {
           method: 'POST',
           headers: {
@@ -74,244 +76,245 @@ const PreferenceCollector = ({ onComplete }: PreferenceCollectorProps) => {
           },
           body: JSON.stringify({
             ...preferences,
-            userId: 1, // Default user ID
+            userId: 1,
           }),
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to save preferences');
-        }
+        if (!response.ok) throw new Error('Failed to save preferences');
 
-        // Get the saved preference with the ID assigned by the backend
         const savedPreference = await response.json();
         onComplete(savedPreference as TravelPreference);
       } catch (error) {
         console.error('Error saving preferences:', error);
-        // You could add error handling UI here
       }
     }
   };
 
+  const fadeInUp = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+    transition: { duration: 0.3 }
+  };
+
   const formSteps = [
     // Step 1: Destination
-    <motion.div
-      key="step1"
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="space-y-6"
-    >
-      <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-800">Where to?</h3>
-        <p className="text-gray-600">Let's start with your dream destination</p>
+    <motion.div key="step1" {...fadeInUp} className="space-y-8">
+      <div className="text-center">
+        <motion.h3 
+          className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+        >
+          Where to?
+        </motion.h3>
+        <motion.p 
+          className="text-gray-500 mt-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Let's start with your dream destination
+        </motion.p>
       </div>
 
-      <div className="mb-5">
-        <label className="block text-sm font-medium mb-1 text-gray-700">Destination</label>
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="e.g., Paris, Tokyo, Bali"
-            className="w-full py-3 px-4 pl-10 rounded-lg border border-gray-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            value={preferences.customDestination || ""}
-            onChange={(e) => updatePreference("customDestination", e.target.value)}
-          />
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 absolute left-3 top-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl transform -skew-y-2" />
+        <div className="relative p-6">
+          <label className="block text-sm font-semibold mb-2 text-gray-700">Destination</label>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="e.g., Paris, Tokyo, Bali"
+              className="w-full py-4 px-5 pl-12 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm bg-white/80 backdrop-blur-sm transition-all"
+              value={preferences.customDestination || ''}
+              onChange={(e) => updatePreference('customDestination', e.target.value)}
+            />
+            <MapPin className="h-5 w-5 absolute left-4 top-1/2 -translate-y-1/2 text-indigo-500" />
+          </div>
         </div>
       </div>
 
       {destinationImage && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="rounded-lg overflow-hidden shadow-lg mb-5 h-48"
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.9 }} 
+          animate={{ opacity: 1, scale: 1 }} 
+          className="rounded-2xl overflow-hidden shadow-lg relative group"
         >
-          <img
-            src={destinationImage}
-            alt={preferences.customDestination || "Destination"}
-            className="w-full h-full object-cover"
-          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          <img src={destinationImage} alt="Destination" className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500" />
+          <motion.div 
+            className="absolute bottom-0 left-0 right-0 p-6 text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h4 className="text-2xl font-bold">{preferences.customDestination}</h4>
+          </motion.div>
         </motion.div>
       )}
 
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-3 gap-4">
         {preferenceTypes.destinationType.slice(0, 6).map((type) => (
-          <button
+          <motion.button
             key={type}
-            type="button"
-            onClick={() => updatePreference("destinationType", type)}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => updatePreference('destinationType', type)}
             className={cn(
-              "py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200",
+              "py-3 px-4 rounded-xl text-sm font-medium transition-all shadow-sm",
               preferences.destinationType === type
-                ? "bg-indigo-100 text-indigo-700 border-2 border-indigo-500"
-                : "bg-gray-100 text-gray-700 border-2 border-transparent hover:bg-gray-200"
+                ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
+                : "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200"
             )}
           >
             {type.charAt(0).toUpperCase() + type.slice(1)}
-          </button>
+          </motion.button>
         ))}
       </div>
     </motion.div>,
 
     // Step 2: Dates and Budget
-    <motion.div
-      key="step2"
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="space-y-6"
-    >
-      <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-800">When & How?</h3>
-        <p className="text-gray-600">Let's plan your perfect trip timing</p>
+    <motion.div key="step2" {...fadeInUp} className="space-y-8">
+      <div className="text-center">
+        <motion.h3 
+          className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+          {...fadeInUp}
+        >
+          When & How?
+        </motion.h3>
+        <motion.p className="text-gray-500 mt-2" {...fadeInUp}>
+          Let's plan your perfect trip duration and style
+        </motion.p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-5">
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">Start Date</label>
-          <div className="relative">
-            <input
-              type="date"
-              className="w-full py-3 px-4 pl-10 rounded-lg border border-gray-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              value={preferences.startDate || ""}
-              onChange={(e) => updatePreference("startDate", e.target.value)}
-            />
-          </div>
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1 text-gray-700">End Date</label>
-          <div className="relative">
-            <input
-              type="date"
-              className="w-full py-3 px-4 pl-10 rounded-lg border border-gray-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              value={preferences.endDate || ""}
-              onChange={(e) => updatePreference("endDate", e.target.value)}
-            />
-          </div>
-        </div>
+      <div className="grid grid-cols-2 gap-6">
+        {['startDate', 'endDate'].map((key) => (
+          <motion.div key={key} {...fadeInUp} className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl transform -skew-y-2" />
+            <div className="relative p-4">
+              <label className="block text-sm font-semibold mb-2 text-gray-700">
+                {key === 'startDate' ? 'Start Date' : 'End Date'}
+              </label>
+              <div className="relative">
+                <input
+                  type="date"
+                  className="w-full py-3 px-4 pl-12 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm bg-white/80 backdrop-blur-sm"
+                  value={formatDateForInput(preferences[key as keyof TravelPreference] as string | Date | null | undefined)}
+                  onChange={(e) => updatePreference(key as keyof TravelPreference, e.target.value)}
+                />
+                <Calendar className="h-5 w-5 absolute left-4 top-1/2 -translate-y-1/2 text-indigo-500" />
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
-      <div className="mb-5">
-        <label className="block text-sm font-medium mb-2 text-gray-700">Budget</label>
-        <div className="grid grid-cols-3 gap-3">
-          {preferenceTypes.budget.map((type) => (
-            <button
-              key={type}
-              type="button"
-              onClick={() => updatePreference("budget", type)}
+      <motion.div {...fadeInUp} className="space-y-4">
+        <label className="block text-sm font-semibold text-gray-700">Budget Range</label>
+        <div className="grid grid-cols-3 gap-4">
+          {['budget', 'midrange', 'luxury'].map((budget) => (
+            <motion.button
+              key={budget}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => updatePreference('budget', budget)}
               className={cn(
-                "py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200",
-                preferences.budget === type
-                  ? "bg-indigo-100 text-indigo-700 border-2 border-indigo-500"
-                  : "bg-gray-100 text-gray-700 border-2 border-transparent hover:bg-gray-200"
+                "py-3 px-4 rounded-xl text-sm font-medium transition-all shadow-sm",
+                preferences.budget === budget
+                  ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
+                  : "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200"
               )}
             >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </button>
+              {budget.charAt(0).toUpperCase() + budget.slice(1)}
+            </motion.button>
           ))}
         </div>
-      </div>
-
-      <div className="mb-5">
-        <label className="block text-sm font-medium mb-2 text-gray-700">Travel Pace</label>
-        <div className="grid grid-cols-3 gap-3">
-          {preferenceTypes.pace.map((type) => (
-            <button
-              key={type}
-              type="button"
-              onClick={() => updatePreference("pace", type)}
-              className={cn(
-                "py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200",
-                preferences.pace === type
-                  ? "bg-indigo-100 text-indigo-700 border-2 border-indigo-500"
-                  : "bg-gray-100 text-gray-700 border-2 border-transparent hover:bg-gray-200"
-              )}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </button>
-          ))}
-        </div>
-      </div>
+      </motion.div>
     </motion.div>,
 
-    // Step 3: Interests and Companions
-    <motion.div
-      key="step3"
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      className="space-y-6"
-    >
-      <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-800">Who’s Coming?</h3>
-        <p className="text-gray-600">Let us know about your travel companions</p>
+    // Step 3: Additional Preferences
+    <motion.div key="step3" {...fadeInUp} className="space-y-8">
+      <div className="text-center">
+        <motion.h3 
+          className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent"
+          {...fadeInUp}
+        >
+          Final Touches
+        </motion.h3>
+        <motion.p className="text-gray-500 mt-2" {...fadeInUp}>
+          Help us personalize your experience
+        </motion.p>
       </div>
 
-      <div className="mb-5">
-        <label className="block text-sm font-medium mb-2 text-gray-700">Interests</label>
-        <div className="grid grid-cols-3 gap-3">
-          {preferenceTypes.destinationType?.map((interest) => (
-            <button
-              key={interest}
-              type="button"
-              onClick={() => updatePreference("interests", interest)}
-              className={cn(
-                "py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200",
-                preferences.interests === interest
-                  ? "bg-indigo-100 text-indigo-700 border-2 border-indigo-500"
-                  : "bg-gray-100 text-gray-700 border-2 border-transparent hover:bg-gray-200"
-              )}
-            >
-              {interest.charAt(0).toUpperCase() + interest.slice(1)}
-            </button>
-          ))}
+      <motion.div {...fadeInUp} className="space-y-6">
+        <div className="space-y-4">
+          <label className="block text-sm font-semibold text-gray-700">Travel Pace</label>
+          <div className="grid grid-cols-3 gap-4">
+            {['relaxed', 'moderate', 'intense'].map((pace) => (
+              <motion.button
+                key={pace}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => updatePreference('pace', pace)}
+                className={cn(
+                  "py-3 px-4 rounded-xl text-sm font-medium transition-all shadow-sm",
+                  preferences.pace === pace
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
+                    : "bg-white hover:bg-gray-50 text-gray-700 border border-gray-200"
+                )}
+              >
+                <Clock className="h-4 w-4 mb-2 mx-auto" />
+                {pace.charAt(0).toUpperCase() + pace.slice(1)}
+              </motion.button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="mb-5">
-        <label className="block text-sm font-medium mb-2 text-gray-700">Companions</label>
-        <div className="grid grid-cols-3 gap-3">
-          {preferenceTypes.travelCompanions.map((type) => (
-            <button
-              key={type}
-              type="button"
-              onClick={() => updatePreference("companions", type)}
-              className={cn(
-                "py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200",
-                preferences.companions === type
-                  ? "bg-indigo-100 text-indigo-700 border-2 border-indigo-500"
-                  : "bg-gray-100 text-gray-700 border-2 border-transparent hover:bg-gray-200"
-              )}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </button>
-          ))}
+        <div className="space-y-4">
+          <label className="block text-sm font-semibold text-gray-700">Interests</label>
+          <textarea
+            className="w-full py-3 px-4 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent shadow-sm bg-white/80 backdrop-blur-sm"
+            placeholder="Tell us about your interests (e.g., history, food, adventure...)"
+            value={preferences.interests || ''}
+            onChange={(e) => updatePreference('interests', e.target.value)}
+            rows={4}
+          />
         </div>
-      </div>
-    </motion.div>,
+      </motion.div>
+    </motion.div>
   ];
 
   return (
-    <div className="p-5">
-      <AnimatePresence>{formSteps[step]}</AnimatePresence>
-      <div className="flex justify-between mt-6">
-        <button
-          className="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg"
+    <div className="max-w-2xl mx-auto p-8 bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl border border-gray-100">
+      <AnimatePresence mode="wait">
+        {formSteps[step]}
+      </AnimatePresence>
+      
+      <motion.div 
+        className="flex justify-between mt-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4 }}
+      >
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={prevStep}
           disabled={step === 0}
+          className="px-6 py-3 rounded-xl bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50 disabled:hover:bg-gray-100 transition-all shadow-sm font-medium"
         >
-          Previous
-        </button>
-        <button
-          className="bg-indigo-600 text-white py-2 px-4 rounded-lg"
+          Back
+        </motion.button>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={nextStep}
+          className="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 transition-all shadow-md font-medium"
         >
-          {step === 2 ? 'Submit' : 'Next'}
-        </button>
-      </div>
+          {step < 2 ? 'Next' : 'Create My Trip'}
+        </motion.button>
+      </motion.div>
     </div>
   );
 };
